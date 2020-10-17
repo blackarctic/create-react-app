@@ -20,7 +20,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
-const ManifestPlugin = require('webpack-manifest-plugin');
+/* webpack-5-react-scripts start */
+// const ManifestPlugin = require('webpack-manifest-plugin');
+/* webpack-5-react-scripts end */
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
@@ -176,7 +178,9 @@ module.exports = function (webpackEnv) {
             //
             // When using the experimental react-refresh integration,
             // the webpack plugin takes care of injecting the dev client for us.
-            webpackDevClientEntry,
+            /* webpack-5-react-scripts start */
+            // webpackDevClientEntry,
+            /* webpack-5-react-scripts end */
             // Finally, this is your app's code:
             paths.appIndexJs,
             // We include the app code last so that if there is a runtime error during
@@ -186,16 +190,24 @@ module.exports = function (webpackEnv) {
         : paths.appIndexJs,
     output: {
       // The build folder.
-      path: isEnvProduction ? paths.appBuild : undefined,
+      /* webpack-5-react-scripts start */
+      // path: isEnvProduction ? paths.appBuild : undefined,
+      path: paths.appBuild,
+      /* webpack-5-react-scripts end */
       // Add /* filename */ comments to generated require()s in the output.
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].js'
-        : isEnvDevelopment && 'static/js/bundle.js',
+        : /* webpack-5-react-scripts start */
+          // : isEnvDevelopment && 'static/js/bundle.js',
+          isEnvDevelopment && 'static/js/[name].js',
+      /* webpack-5-react-scripts end */
       // TODO: remove this when upgrading to webpack 5
-      futureEmitAssets: true,
+      /* webpack-5-react-scripts start */
+      // futureEmitAssets: true,
+      /* webpack-5-react-scripts end */
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].chunk.js'
@@ -261,6 +273,9 @@ module.exports = function (webpackEnv) {
               ascii_only: true,
             },
           },
+          /* webpack-5-react-scripts start */
+          parallel: process.env.CI ? false : true,
+          /* webpack-5-react-scripts end */
           sourceMap: shouldUseSourceMap,
         }),
         // This is only used in production mode
@@ -293,9 +308,11 @@ module.exports = function (webpackEnv) {
       // Keep the runtime chunk separated to enable long term caching
       // https://twitter.com/wSokra/status/969679223278505985
       // https://github.com/facebook/create-react-app/issues/5358
-      runtimeChunk: {
-        name: entrypoint => `runtime-${entrypoint.name}`,
-      },
+      /* webpack-5-react-scripts start */
+      // runtimeChunk: {
+      //   name: entrypoint => `runtime-${entrypoint.name}`,
+      // },
+      /* webpack-5-react-scripts end */
     },
     resolve: {
       // This allows you to set a fallback for where webpack should look for modules.
@@ -348,7 +365,9 @@ module.exports = function (webpackEnv) {
       strictExportPresence: true,
       rules: [
         // Disable require.ensure as it's not a standard language feature.
-        { parser: { requireEnsure: false } },
+        /* webpack-5-react-scripts start */
+        // { parser: { requireEnsure: false } },
+        /* webpack-5-react-scripts end */
 
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
@@ -582,6 +601,10 @@ module.exports = function (webpackEnv) {
               exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
+                /* webpack-5-react-scripts start */
+                // https://stackoverflow.com/questions/59070216/webpack-file-loader-outputs-object-module
+                esModule: false,
+                /* webpack-5-react-scripts end */
               },
             },
             // ** STOP ** Are you adding a new loader?
@@ -639,7 +662,9 @@ module.exports = function (webpackEnv) {
       // Otherwise React will be compiled in the very slow development mode.
       new webpack.DefinePlugin(env.stringified),
       // This is necessary to emit hot updates (CSS and Fast Refresh):
-      isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
+      /* webpack-5-react-scripts start */
+      // isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
+      /* webpack-5-react-scripts end */
       // Experimental hot reloading for React .
       // https://github.com/facebook/react/tree/master/packages/react-refresh
       isEnvDevelopment &&
@@ -678,30 +703,38 @@ module.exports = function (webpackEnv) {
       //   `index.html`
       // - "entrypoints" key: Array of files which are included in `index.html`,
       //   can be used to reconstruct the HTML if necessary
-      new ManifestPlugin({
-        fileName: 'asset-manifest.json',
-        publicPath: paths.publicUrlOrPath,
-        generate: (seed, files, entrypoints) => {
-          const manifestFiles = files.reduce((manifest, file) => {
-            manifest[file.name] = file.path;
-            return manifest;
-          }, seed);
-          const entrypointFiles = entrypoints.main.filter(
-            fileName => !fileName.endsWith('.map')
-          );
+      /* webpack-5-react-scripts start */
+      // new ManifestPlugin({
+      //   fileName: 'asset-manifest.json',
+      //   publicPath: paths.publicUrlOrPath,
+      //   generate: (seed, files, entrypoints) => {
+      //     const manifestFiles = files.reduce((manifest, file) => {
+      //       manifest[file.name] = file.path;
+      //       return manifest;
+      //     }, seed);
+      //     const entrypointFiles = entrypoints.main.filter(
+      //       fileName => !fileName.endsWith('.map')
+      //     );
 
-          return {
-            files: manifestFiles,
-            entrypoints: entrypointFiles,
-          };
-        },
-      }),
+      //     return {
+      //       files: manifestFiles,
+      //       entrypoints: entrypointFiles,
+      //     };
+      //   },
+      // }),
+      /* webpack-5-react-scripts end */
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how webpack interprets its code. This is a practical
       // solution that requires the user to opt into importing specific locales.
       // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
       // You can remove this if you don't use Moment.js:
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      /* webpack-5-react-scripts start */
+      // new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/,
+      }),
+      /* webpack-5-react-scripts end */
       // Generate a service worker script that will precache, and keep up to date,
       // the HTML & assets that are part of the webpack build.
       isEnvProduction &&
@@ -745,16 +778,18 @@ module.exports = function (webpackEnv) {
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.
-    node: {
-      module: 'empty',
-      dgram: 'empty',
-      dns: 'mock',
-      fs: 'empty',
-      http2: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      child_process: 'empty',
-    },
+    /* webpack-5-react-scripts start */
+    // node: {
+    //   module: 'empty',
+    //   dgram: 'empty',
+    //   dns: 'mock',
+    //   fs: 'empty',
+    //   http2: 'empty',
+    //   net: 'empty',
+    //   tls: 'empty',
+    //   child_process: 'empty',
+    // },
+    /* webpack-5-react-scripts end */
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,
