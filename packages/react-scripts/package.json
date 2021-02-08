@@ -82,7 +82,7 @@
     "terser-webpack-plugin": "3.0.1",
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.1",
-    "wbpk-5-cra-utils": "1.1.0",
+    "wbpk-5-cra-utils": "11.0.2-next.0",
     "webpack": "5.10.0",
     "webpack-dev-server": "3.11.0",
     "webpack-manifest-plugin": "2.2.0",
