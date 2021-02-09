@@ -50,6 +50,18 @@ class ModuleScopePlugin {
           path.dirname(request.context.issuer),
           request.__innerRequest_request
         );
+        /* wbpk-5-cra-utils start */
+        // Fix for @babel/runtime imports
+        if (
+          appSrcs.every(appSrc => {
+            const relative = path.relative(appSrc, requestFullPath);
+            // If this is an import of a node_module adjacent to our src, allow it
+            return relative.startsWith('../node_modules') || relative.startsWith('\\node_modules\\');;
+          })
+        ) {
+          return callback();
+        }
+        /* wbpk-5-cra-utils end */
         if (this.allowedFiles.has(requestFullPath)) {
           return callback();
         }
