@@ -259,7 +259,21 @@ module.exports = function (webpackEnv) {
       /* webpack-5-react-scripts end */
       // this defaults to 'window', but by setting it to 'this' then
       // module chunks which are built will work in web workers as well.
-      globalObject: 'this',
+      /* webpack-5-react-scripts start */
+      // Fix for issue: https://github.com/webpack/webpack/issues/6525#issuecomment-552140798
+      // globalObject: 'this',
+      globalObject: `(() => {
+        if (typeof self !== 'undefined') {
+            return self;
+        } else if (typeof window !== 'undefined') {
+            return window;
+        } else if (typeof global !== 'undefined') {
+            return global;
+        } else {
+            return Function('return this')();
+        }
+      })()`,  
+      /* webpack-5-react-scripts end */
     },
     optimization: {
       minimize: isEnvProduction,
