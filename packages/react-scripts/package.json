@@ -1,6 +1,6 @@
 {
   "name": "webpack-5-react-scripts",
-  "version": "4.0.2-next.3",
+  "version": "4.0.3",
   "description": "Configuration and scripts for Create React App using Webpack 5.",
   "repository": {
     "type": "git",
@@ -53,7 +53,7 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^3.9.2",
-    "eslint-webpack-plugin": "^2.1.0",
+    "eslint-webpack-plugin": "^2.5.2",
     "file-loader": "6.1.1",
     "fs-extra": "^9.0.1",
     "html-webpack-plugin": "4.5.0",
@@ -72,7 +72,7 @@
     "postcss-safe-parser": "5.0.2",
     "prompts": "2.4.0",
     "react-app-polyfill": "^2.0.0",
-    "react-dev-utils": "^11.0.2",
+    "react-dev-utils": "^11.0.3",
     "react-refresh": "^0.8.3",
     "resolve": "1.18.1",
     "resolve-url-loader": "^3.1.2",
@@ -82,9 +82,9 @@
     "terser-webpack-plugin": "3.0.1",
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.1",
-    "wbpk-5-cra-utils": "11.0.2-next.1",
+    "wbpk-5-cra-utils": "11.0.3",
     "webpack": "5.10.0",
-    "webpack-dev-server": "3.11.0",
+    "webpack-dev-server": "3.11.1",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "5.1.4"
   },
