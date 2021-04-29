@@ -156,7 +156,10 @@ function verifyTypeScriptSetup() {
           : 'react',
       reason: 'to support the new JSX transform in React 17',
     },
-    paths: { value: undefined, reason: 'aliased imports are not supported' },
+    /* webpack-5-react-scripts start */
+    // https://github.com/facebook/create-react-app/issues/9429
+    // paths: { value: undefined, reason: 'aliased imports are not supported' },
+    /* webpack-5-react-scripts end */
   };
 
   const formatDiagnosticHost = {
@@ -290,7 +293,10 @@ function verifyTypeScriptSetup() {
   if (!fs.existsSync(paths.appTypeDeclarations)) {
     fs.writeFileSync(
       paths.appTypeDeclarations,
-      `/// <reference types="react-scripts" />${os.EOL}`
+      /* webpack-5-react-scripts start */
+      // `/// <reference types="react-scripts" />${os.EOL}`
+      `/// <reference types="webpack-5-react-scripts" />${os.EOL}`
+      /* webpack-5-react-scripts end */
     );
   }
 }
